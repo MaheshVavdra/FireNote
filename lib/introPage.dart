@@ -3,6 +3,7 @@ import 'package:todo/addTaskWithoutCal.dart';
 import 'LeftRightAlign.dart';
 import 'Quotes.dart';
 import 'dart:math';
+import 'addTaskWithCal.dart';
 import 'sun_moon_add_cal_icons.dart' as CustIcons;
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
@@ -17,6 +18,9 @@ class IntroPage extends StatefulWidget {
 class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
   bool darkMode = false;
   Color fontcolor = Colors.black;
+  double animatePlateOne = -0.19,
+      animatePlateTwo = -0.19,
+      animatePlateThree = -0.33;
   var moonSun = CustIcons.SunMoonAddCal.moon;
 
   AnimationController _lightToDarkAnimationController;
@@ -27,8 +31,12 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
   Animation _lightToDarkPrimaryShadowColorTween;
   Animation _lightToDarkSecondaryShadowColorTween;
 
+  SequenceAnimation _vanishIntroAnimation;
   SequenceAnimation _tutLengthAnimation;
+  AnimationController _vanishIntroAnimationController;
   AnimationController _tutAnimationController;
+  AnimationController _infoOpacityAnimationController;
+  Animation _infoOpacityAnimation;
 
   var helpPosition = 350;
   double posOne = 1, posTwo = 1, posThree = 1;
@@ -42,6 +50,14 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
 
     // initial Variable initialisation
     //helpPosition = 250;
+
+    _infoOpacityAnimationController = AnimationController(
+        vsync: this,
+        duration: new Duration(
+          milliseconds: 1000,
+        ));
+    _infoOpacityAnimation = Tween<double>(begin: 0, end: 1)
+        .animate(_infoOpacityAnimationController);
     _lightToDarkAnimationController = AnimationController(
         vsync: this,
         duration: new Duration(
@@ -86,178 +102,258 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
             curve: Curves.elasticOut,
             animatable: Tween(begin: helpPosition, end: 0),
             from: Duration(
-              milliseconds: 0,
-            ),
-            to: Duration(milliseconds: 1200),
-            tag: "topBottom")
-        .addAnimatable(
-            animatable: Tween<double>(begin: infoWidth, end: 250),
-            curve: Curves.elasticOut,
-            from: Duration(
-              milliseconds: 1400,
-            ),
-            to: Duration(milliseconds: 2000),
-            tag: "widthAnimate")
-        .addAnimatable(
-            animatable: Tween<double>(begin: infoTag, end: infoTag++),
-            // curve: Curves.easeOut,
-            from: Duration(
-              milliseconds: 2199,
+              milliseconds: 1000,
             ),
             to: Duration(milliseconds: 2200),
+            tag: "topBottom")
+        .addAnimatable(
+            curve: Curves.elasticOut,
+            animatable: Tween(begin: animatePlateOne, end: 0.33),
+            from: Duration(
+              milliseconds: 1000,
+            ),
+            to: Duration(milliseconds: 2200),
+            tag: "discriptionPlateOne")
+        .addAnimatable(
+            animatable: Tween<double>(begin: infoWidth, end: 250),
+            curve: Curves.elasticOut,
+            from: Duration(
+              milliseconds: 2400,
+            ),
+            to: Duration(milliseconds: 3000),
+            tag: "widthAnimate")
+        .addAnimatable(
+            animatable: Tween<double>(begin: infoTag, end: infoTag++),
+            // curve: Curves.easeOut,
+            from: Duration(
+              milliseconds: 3199,
+            ),
+            to: Duration(milliseconds: 3200),
             tag: "textChange")
         .addAnimatable(
             animatable: Tween<double>(begin: 0, end: 1),
             curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 2200,
+              milliseconds: 3200,
             ),
-            to: Duration(milliseconds: 2400),
+            to: Duration(milliseconds: 3400),
             tag: "textOpacity")
         .addAnimatable(
             animatable: Tween<double>(begin: 1, end: 0),
             curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 3600,
+              milliseconds: 4600,
             ),
-            to: Duration(milliseconds: 3800),
+            to: Duration(milliseconds: 4800),
             tag: "textOpacity")
         .addAnimatable(
             animatable: Tween<double>(begin: 250, end: 70),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 4000,
+              milliseconds: 5000,
             ),
-            to: Duration(milliseconds: 4600),
+            to: Duration(milliseconds: 5600),
             tag: "widthAnimate")
         .addAnimatable(
             animatable: Tween<double>(begin: 1, end: 0),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 4601,
+              milliseconds: 5601,
             ),
-            to: Duration(milliseconds: 5500),
+            to: Duration(milliseconds: 6500),
             tag: "posThreeAnimate")
+        .addAnimatable(
+            animatable: Tween<double>(begin: animatePlateTwo, end: 0.19),
+            curve: Curves.elasticOut,
+            from: Duration(
+              milliseconds: 5601,
+            ),
+            to: Duration(milliseconds: 6500),
+            tag: "discriptionPlateTwo")
         .addAnimatable(
             animatable: Tween<double>(begin: infoTag, end: infoTag++),
             // curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 5500,
+              milliseconds: 6500,
             ),
-            to: Duration(milliseconds: 6000),
+            to: Duration(milliseconds: 7000),
             tag: "textChange")
         .addAnimatable(
             animatable: Tween<double>(begin: infoWidth, end: 250),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 5500,
+              milliseconds: 6500,
             ),
-            to: Duration(milliseconds: 6100),
+            to: Duration(milliseconds: 7100),
             tag: "widthAnimate")
         .addAnimatable(
             animatable: Tween<double>(begin: 0, end: 1),
             curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 6300,
+              milliseconds: 7300,
             ),
-            to: Duration(milliseconds: 6500),
+            to: Duration(milliseconds: 7500),
             tag: "textOpacity")
         .addAnimatable(
             animatable: Tween<double>(begin: 1, end: 0),
             curve: Curves.easeOut,
-            from: Duration(
-              milliseconds: 7700,
-            ),
-            to: Duration(milliseconds: 7900),
-            tag: "textOpacity")
-        .addAnimatable(
-            animatable: Tween<double>(begin: 250, end: 70),
-            curve: Curves.elasticOut,
-            from: Duration(
-              milliseconds: 8100,
-            ),
-            to: Duration(milliseconds: 8700),
-            tag: "widthAnimate")
-        .addAnimatable(
-            animatable: Tween<double>(begin: infoTag, end: infoTag++),
-
-            ///curve: Curves.easeOut,
             from: Duration(
               milliseconds: 8700,
             ),
-            to: Duration(milliseconds: 8701),
-            tag: "textChange")
+            to: Duration(milliseconds: 8900),
+            tag: "textOpacity")
         .addAnimatable(
-            animatable: Tween<double>(begin: 1, end: 0),
+            animatable: Tween<double>(begin: 250, end: 70),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 8701,
+              milliseconds: 9100,
             ),
-            to: Duration(milliseconds: 9600),
-            tag: "posTwoAnimate")
-        .addAnimatable(
-            animatable: Tween<double>(begin: infoWidth, end: 250),
-            curve: Curves.elasticOut,
-            from: Duration(
-              milliseconds: 9600,
-            ),
-            to: Duration(milliseconds: 10200),
+            to: Duration(milliseconds: 9700),
             tag: "widthAnimate")
         .addAnimatable(
             animatable: Tween<double>(begin: infoTag, end: infoTag++),
 
             ///curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 10398,
+              milliseconds: 9700,
             ),
-            to: Duration(milliseconds: 10399),
+            to: Duration(milliseconds: 9701),
+            tag: "textChange")
+        .addAnimatable(
+            animatable: Tween<double>(begin: 1, end: 0),
+            curve: Curves.elasticOut,
+            from: Duration(
+              milliseconds: 9701,
+            ),
+            to: Duration(milliseconds: 10600),
+            tag: "posTwoAnimate")
+        .addAnimatable(
+            animatable: Tween<double>(begin: animatePlateThree, end: 0.05),
+            curve: Curves.elasticOut,
+            from: Duration(
+              milliseconds: 9701,
+            ),
+            to: Duration(milliseconds: 10600),
+            tag: "discriptionPlateThree")
+        .addAnimatable(
+            animatable: Tween<double>(begin: infoWidth, end: 250),
+            curve: Curves.elasticOut,
+            from: Duration(
+              milliseconds: 10600,
+            ),
+            to: Duration(milliseconds: 11200),
+            tag: "widthAnimate")
+        .addAnimatable(
+            animatable: Tween<double>(begin: infoTag, end: infoTag++),
+
+            ///curve: Curves.easeOut,
+            from: Duration(
+              milliseconds: 11398,
+            ),
+            to: Duration(milliseconds: 11399),
             tag: "textChange")
         .addAnimatable(
             animatable: Tween<double>(begin: 0, end: 1),
             curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 10400,
+              milliseconds: 11400,
             ),
-            to: Duration(milliseconds: 10800),
+            to: Duration(milliseconds: 11800),
             tag: "textOpacity")
         .addAnimatable(
             animatable: Tween<double>(begin: 1, end: 0),
             curve: Curves.easeOut,
             from: Duration(
-              milliseconds: 11800,
+              milliseconds: 12800,
             ),
-            to: Duration(milliseconds: 12000),
+            to: Duration(milliseconds: 13000),
             tag: "textOpacity")
         .addAnimatable(
             animatable: Tween<double>(begin: 250, end: 70),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 12200,
+              milliseconds: 13200,
             ),
-            to: Duration(milliseconds: 12800),
+            to: Duration(milliseconds: 13800),
             tag: "widthAnimate")
         .addAnimatable(
             animatable: Tween<double>(begin: 70, end: 70),
             curve: Curves.elasticOut,
             from: Duration(
-              milliseconds: 12800,
+              milliseconds: 13800,
             ),
-            to: Duration(milliseconds: 12801),
+            to: Duration(milliseconds: 13801),
             tag: "widthAnimate")
         .animate(_tutAnimationController);
 
+    //_vanishIntroAnimation
+    _vanishIntroAnimationController = AnimationController(vsync: this);
+    _vanishIntroAnimation = SequenceAnimationBuilder()
+        .addAnimatable(
+            animatable: Tween<double>(begin: 0, end: 400),
+            curve: Curves.easeIn,
+            from: Duration(
+              milliseconds: 0,
+            ),
+            to: Duration(milliseconds: 500),
+            tag: "infoBall")
+        .addAnimatable(
+            animatable: Tween<double>(begin: 0, end: 800),
+            curve: Curves.easeOut,
+            from: Duration(
+              milliseconds: 500,
+            ),
+            to: Duration(milliseconds: 1500),
+            tag: "PlateOne")
+        .addAnimatable(
+            animatable: Tween<double>(begin: 0, end: 800),
+            curve: Curves.easeOut,
+            from: Duration(
+              milliseconds: 1000,
+            ),
+            to: Duration(milliseconds: 2000),
+            tag: "PlateTwo")
+        .addAnimatable(
+            animatable: Tween<double>(begin: 0, end: 800),
+            curve: Curves.easeOut,
+            from: Duration(
+              milliseconds: 1500,
+            ),
+            to: Duration(milliseconds: 2500),
+            tag: "PlateThree")
+        .animate(_vanishIntroAnimationController);
+    _vanishIntroAnimationController.addListener(() {
+      setState(() {
+        if (_vanishIntroAnimationController.isCompleted) {
+          //infoOpacityAinamtion
+          _infoOpacityAnimationController.forward();
+        }
+      });
+    });
+    _infoOpacityAnimationController.addListener(() {
+      setState(() {});
+    });
     infoWidth = 70;
+     _tutAnimationController.forward();
   }
 
-  Future navigateToCreateNewTask(context) async {
+  Future navigateToNewTaskWithoutCal(context) async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => AddTaskWithoutCal()));
+  }
+
+  Future navigateToNewTaskWithCal(context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddTaskWithCal()));
   }
 
   @override
   void dispose() {
     super.dispose();
     _lightToDarkAnimationController.dispose();
+    _vanishIntroAnimationController.dispose();
+    _tutAnimationController.dispose();
+    _infoOpacityAnimationController.dispose();
   }
 
   @override
@@ -265,6 +361,7 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     infoWidth = 70;
+
     return AnimatedBuilder(
       animation: _lightToDarkAnimationController,
       builder: (context, child) => Scaffold(
@@ -308,7 +405,7 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
               child: AnimatedBuilder(
                 animation: _lightToDarkAnimationController,
                 builder: (context, child) => Opacity(
-                  opacity: 1.0,
+                  opacity: _infoOpacityAnimation.value,
                   child: Container(
                     height: height * 0.35,
                     width: width * 0.45,
@@ -425,7 +522,7 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
                         child: Center(
                           child: GestureDetector(
                             onTap: () {
-                              navigateToCreateNewTask(context);
+                              navigateToNewTaskWithoutCal(context);
                             },
                             child: Container(
                                 width: 70,
@@ -463,34 +560,39 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
                       Container(
                         height: (height * 0.35) / 3,
                         child: Center(
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            decoration: BoxDecoration(
-                                color: _lightToDarkPrimaryCardColorTween.value,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: _lightToDarkPrimaryShadowColorTween
-                                          .value,
-                                      offset: Offset(4.0, 4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                  BoxShadow(
-                                      color:
-                                          _lightToDarkSecondaryShadowColorTween
-                                              .value,
-                                      offset: Offset(-4.0, -4.0),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 1.0),
-                                ]),
-                            child: Tab(
-                                icon: Icon(
-                              CustIcons.SunMoonAddCal.cal,
-                              color: Colors.white,
-                              size: 35,
-                            )),
+                          child: GestureDetector(
+                            onTap: () {navigateToNewTaskWithCal(context);},
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  color:
+                                      _lightToDarkPrimaryCardColorTween.value,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color:
+                                            _lightToDarkPrimaryShadowColorTween
+                                                .value,
+                                        offset: Offset(4.0, 4.0),
+                                        blurRadius: 15.0,
+                                        spreadRadius: 1.0),
+                                    BoxShadow(
+                                        color:
+                                            _lightToDarkSecondaryShadowColorTween
+                                                .value,
+                                        offset: Offset(-4.0, -4.0),
+                                        blurRadius: 15.0,
+                                        spreadRadius: 1.0),
+                                  ]),
+                              child: Tab(
+                                  icon: Icon(
+                                CustIcons.SunMoonAddCal.cal,
+                                color: Colors.white,
+                                size: 35,
+                              )),
+                            ),
                           ),
                         ),
                       ),
@@ -563,8 +665,8 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
               child: AnimatedBuilder(
                 animation: _lightToDarkAnimationController,
                 builder: (context, child) => Opacity(
-                  opacity: 1.0,
-                                  child: Container(
+                  opacity: _infoOpacityAnimation.value,
+                  child: Container(
                     height: height * 0.20,
                     width: width * 0.70,
                     decoration: BoxDecoration(
@@ -647,55 +749,58 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
               bottom: height * 0.07,
               child: AnimatedBuilder(
                 animation: _lightToDarkAnimationController,
-                builder: (context, child) => Container(
-                    height: 60,
-                    width: 240,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: _lightToDarkPrimaryCardColorTween.value,
-                        boxShadow: [
-                          BoxShadow(
-                            color: _lightToDarkPrimaryShadowColorTween.value,
-                            offset: Offset(4, 4),
-                            spreadRadius: 1.0,
-                            blurRadius: 15,
-                          ),
-                          BoxShadow(
-                            color: _lightToDarkSecondaryShadowColorTween
-                                .value, // darkMode ? Colors.grey[800] : Colors.white,
-                            offset: Offset(-4, -4),
-                            spreadRadius: 1,
-                            blurRadius: 15,
-                          ),
-                        ]),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (AnimationStatus.completed ==
-                            _tutAnimationController.status) {
-                          _tutAnimationController.repeat();
-                        } else {
-                          _tutAnimationController.forward();
-                          print(width);
-                        }
-                      },
-                      child: Center(
-                        child: Container(
-                          child: new Text(
-                            "Plan my day",
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontFamily: 'Pacifico',
-                              color: Colors.white,
+                builder: (context, child) => Opacity(
+                  opacity: _infoOpacityAnimation.value,
+                  child: Container(
+                      height: 60,
+                      width: 240,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: _lightToDarkPrimaryCardColorTween.value,
+                          boxShadow: [
+                            BoxShadow(
+                              color: _lightToDarkPrimaryShadowColorTween.value,
+                              offset: Offset(4, 4),
+                              spreadRadius: 1.0,
+                              blurRadius: 15,
+                            ),
+                            BoxShadow(
+                              color: _lightToDarkSecondaryShadowColorTween
+                                  .value, // darkMode ? Colors.grey[800] : Colors.white,
+                              offset: Offset(-4, -4),
+                              spreadRadius: 1,
+                              blurRadius: 15,
+                            ),
+                          ]),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (AnimationStatus.completed ==
+                              _tutAnimationController.status) {
+                            _tutAnimationController.repeat();
+                          } else {
+                            _tutAnimationController.forward();
+                            print(width);
+                          }
+                        },
+                        child: Center(
+                          child: Container(
+                            child: new Text(
+                              "Plan my day",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontFamily: 'Pacifico',
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )),
+                      )),
+                ),
               ),
             ),
             Positioned(
               top: height * 0.20,
-              left: -9000,
+              left: _vanishIntroAnimation["infoBall"].value,
               child: Container(
                 width: 800,
                 height: height * 0.35,
@@ -760,7 +865,7 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
             ),
             Positioned(
               top: height * 0.20,
-              left: -9000,
+              left: _vanishIntroAnimation["infoBall"].value,
               child: Container(
                 width: 800,
                 height: height * 0.35,
@@ -817,7 +922,182 @@ class _IntroPage extends State<IntroPage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-            )
+            ),
+            AnimatedBuilder(
+              animation: _tutAnimationController,
+              builder: (context, child) => Positioned(
+                left: width * 0.05,
+                right: (width * 0.05) + _vanishIntroAnimation["PlateOne"].value,
+                bottom:
+                    height * _tutLengthAnimation["discriptionPlateOne"].value,
+                child: AnimatedBuilder(
+                  animation: _lightToDarkAnimationController,
+                  builder: (context, child) => GestureDetector(
+                    onTap: () {
+                      _vanishIntroAnimationController.forward();
+                    },
+                    child: Container(
+                      height: 90,
+                      width: width * 0.90,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: _lightToDarkPrimaryCardColorTween.value,
+                          boxShadow: [
+                            BoxShadow(
+                              color: _lightToDarkPrimaryShadowColorTween.value,
+                              offset: Offset(4, 4),
+                              spreadRadius: 1.0,
+                              blurRadius: 15,
+                            ),
+                            BoxShadow(
+                              color: _lightToDarkSecondaryShadowColorTween
+                                  .value, // darkMode ? Colors.grey[800] : Colors.white,
+                              offset: Offset(-4, -4),
+                              spreadRadius: 1,
+                              blurRadius: 15,
+                            ),
+                          ]),
+                      child: new Padding(
+                        padding: EdgeInsets.only(left: 10, top: 10),
+                        child: Container(
+                          child: LeftRightAlign(
+                            left: Text(
+                              "If you do not know the date of event, Dont worry Plan by Days can halp you",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Pacifico',
+                                color: Colors.white,
+                              ),
+                            ),
+                            right: Text(""),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ), //0.033  infoPalat(
+            // _tutLengthAnimation["discriptionPlateTwo"].value,
+            // 90,
+            // "If you do not know the date of event, Dont worry Plan by Days can halp you"),
+            AnimatedBuilder(
+              animation: _tutAnimationController,
+              builder: (context, child) => Positioned(
+                left: width * 0.05,
+                right: (width * 0.05) + _vanishIntroAnimation["PlateTwo"].value,
+                bottom:
+                    height * _tutLengthAnimation["discriptionPlateTwo"].value,
+                child: AnimatedBuilder(
+                  animation: _lightToDarkAnimationController,
+                  builder: (context, child) => GestureDetector(
+                    onTap: () {
+                      _vanishIntroAnimationController.forward();
+                    },
+                    child: Container(
+                      height: 90,
+                      width: width * 0.90,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: _lightToDarkPrimaryCardColorTween.value,
+                          boxShadow: [
+                            BoxShadow(
+                              color: _lightToDarkPrimaryShadowColorTween.value,
+                              offset: Offset(4, 4),
+                              spreadRadius: 1.0,
+                              blurRadius: 15,
+                            ),
+                            BoxShadow(
+                              color: _lightToDarkSecondaryShadowColorTween
+                                  .value, // darkMode ? Colors.grey[800] : Colors.white,
+                              offset: Offset(-4, -4),
+                              spreadRadius: 1,
+                              blurRadius: 15,
+                            ),
+                          ]),
+                      child: new Padding(
+                        padding: EdgeInsets.only(left: 10, top: 10),
+                        child: Container(
+                          child: LeftRightAlign(
+                            left: Text(
+                              "Dont Worry if you dont know the Days left for event, just use Plan by Date",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Pacifico',
+                                color: Colors.white,
+                              ),
+                            ),
+                            right: Text(""),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ), //0.19  infoPalat(
+            // _tutLengthAnimation["discriptionPlateTwo"].value,
+            // 90,
+            // "Dont Worry if you dont know the Days of event, just use Plan by Date"),
+            AnimatedBuilder(
+              animation: _tutAnimationController,
+              builder: (context, child) => Positioned(
+                left: width * 0.05,
+                right:
+                    (width * 0.05) + _vanishIntroAnimation["PlateThree"].value,
+                bottom:
+                    height * _tutLengthAnimation["discriptionPlateThree"].value,
+                child: AnimatedBuilder(
+                  animation: _lightToDarkAnimationController,
+                  builder: (context, child) => GestureDetector(
+                    onTap: () {
+                      _vanishIntroAnimationController.forward();
+                    },
+                    child: Container(
+                      height: 90,
+                      width: width * 0.90,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: _lightToDarkPrimaryCardColorTween.value,
+                          boxShadow: [
+                            BoxShadow(
+                              color: _lightToDarkPrimaryShadowColorTween.value,
+                              offset: Offset(4, 4),
+                              spreadRadius: 1.0,
+                              blurRadius: 15,
+                            ),
+                            BoxShadow(
+                              color: _lightToDarkSecondaryShadowColorTween
+                                  .value, // darkMode ? Colors.grey[800] : Colors.white,
+                              offset: Offset(-4, -4),
+                              spreadRadius: 1,
+                              blurRadius: 15,
+                            ),
+                          ]),
+                      child: new Padding(
+                        padding: EdgeInsets.only(left: 10, top: 10),
+                        child: Container(
+                          child: LeftRightAlign(
+                            left: Text(
+                              "Night mode can be used at night time which makes app to use at night ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Pacifico',
+                                color: Colors.white,
+                              ),
+                            ),
+                            right: Text(""),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ), //0.05  infoPalat(
+            // _tutLengthAnimation["discriptionPlateTwo"].value,
+            // 90,
+            // "Night mode can be used at night time which makes app to use at night ")
           ],
         ),
       ),

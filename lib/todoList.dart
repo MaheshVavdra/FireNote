@@ -13,7 +13,7 @@ class _TodoList extends State<TodoList> {
   List<String> listData = [
     "Title one",
     "Title Two",
-    "Title Three",
+    "Title Three", 
     "Title one",
     "Title Two",
     "Title Three",
@@ -97,33 +97,6 @@ class _TodoList extends State<TodoList> {
                     spreadRadius: 1.0),
               ]),
         ),
-        // Container(
-        //   width: 50,
-        //   height: 50,
-        //   margin : EdgeInsets.only(left: 10),
-        //   transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-        //   child: Container(
-        //     child: Icon(
-        //       Icons.settings,
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        //   decoration: BoxDecoration(
-        //       color: Color.fromRGBO(245, 52, 86, 0.9),
-        //       borderRadius: BorderRadius.all(Radius.circular(50)),
-        //       boxShadow: [
-        //         BoxShadow(
-        //             color: darkMode ? Colors.black54 : Colors.grey[500],
-        //             offset: Offset(4.0, 4.0),
-        //             blurRadius: 15.0,
-        //             spreadRadius: 1.0),
-        //         BoxShadow(
-        //             color: darkMode ? Colors.grey[800] : Colors.white,
-        //             offset: Offset(-4.0, -4.0),
-        //             blurRadius: 15.0,
-        //             spreadRadius: 1.0),
-        //       ]),
-        // ),
       ],
     );
   }
